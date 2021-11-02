@@ -1,0 +1,121 @@
+body{
+ background-color: rgb(108, 114, 119);
+ font-family: 'Roboto', sans-serif;
+}
+
+p{
+    color: white;
+}
+
+[href]{
+    color: white;
+}
+a:visited{
+    color: black;
+}
+nav a:visited{
+    color: white;
+}
+nav{
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    background-color:  rgb(108, 114, 119);;
+}
+#navi{
+    display: flex;
+    justify-content: center;
+    justify-content: space-around;
+}
+.container{
+    width: 90%;
+    margin: auto;
+}
+.container h1,h2,h3,h4,h5{
+    display: flex;
+    justify-content: center;
+    color: white;
+}
+
+#erstesRennen h3{
+    display: flex;
+    justify-content: center;
+}
+
+#Video{
+    width: max-content;
+    margin: auto;
+}
+
+#Bilder p{
+    display: flex;
+    justify-content: center;
+}
+#Bilder ul{
+    list-style: none;
+}
+
+#Bilder li{
+    display: flex;
+    justify-content: center;
+    margin-top: 5%;
+}
+
+#Bilder img{
+    border-style: solid;
+    border-color: white;
+}
+#Bilder img:hover{
+    width: 100%;
+    height: auto;
+}
+table{
+    display: flex;
+    justify-content: center;
+}
+th{
+    color: white;
+    text-align: center;
+}
+td{
+    color: lightgray;
+    text-align: center;
+}
+
+#Fahrerranking p{
+    display: flex;
+    justify-content: center;
+}
+
+footer p,address{
+    display: flex;
+    justify-content: center;
+}
+
+#main p{
+    display: flex;
+    justify-content: center;
+}
+
+tr:nth-of-type(2n) td{
+    background-color: whitesmoke;
+    color: rgb(94, 94, 94);
+}
+
+td::selection{
+    background-color: whitesmoke;
+    color: rgb(94, 94, 94);;
+}
+
+tr:nth-of-type(2n) td::selection{
+    background-color: rgb(94, 94, 94);;
+    color: whitesmoke
+}
+
+tr:first-child{
+    animation: ease-in;
+}
+
+a:hover +source{
+    display: block;
+}
