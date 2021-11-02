@@ -7,5 +7,5 @@
 </br> 
 
 ### **2. CSS-Grundlagen**
-  * Code:
+  * Code: https://github.com/RubenRuoss/Abgaben/tree/main/Aufgabe2
   * GitHub Pages: 
