@@ -62,12 +62,15 @@ nav{
 }
 
 #Bilder img{
+    width: 385px;
+    height: 217px;
     border-style: solid;
     border-color: white;
+    transition: width 1s, height 1s;
 }
 #Bilder img:hover{
-    width: 100%;
-    height: auto;
+    width: 577.5pt;
+    height: 325pt;
 }
 table{
     display: flex;
@@ -113,9 +116,20 @@ tr:nth-of-type(2n) td::selection{
 }
 
 tr:first-child{
-    animation: ease-in;
+    
 }
 
 a:hover +source{
     display: block;
 }
+
+@media (max-width: 400px) {
+    .container{
+        width: 95%;
+        margin: auto;
+    }
+    footer p,address{
+        display: flex;
+        justify-content: center;
+    }
+ }
