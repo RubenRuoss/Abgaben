@@ -129,3 +129,7 @@ ConcertEvents.push(new ConcertEvent("Cat Stevens", 12.99));
 ConcertEvents.push(new ConcertEvent("Mark Forster", 2.1));
 ConcertEvents.push(new ConcertEvent("Helene Fischer", 3.1));
 ConcertEvents.push(new ConcertEvent("Bee Gees", 25.2));
+
+for (let index = 0; index < ConcertEvents.length; index++) {
+  ConcertEvents[index].show;
+}
