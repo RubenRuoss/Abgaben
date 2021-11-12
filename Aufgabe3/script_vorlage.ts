@@ -125,6 +125,8 @@ concertEvents.push(new ConcertEvent("Mark Forster", 2.1));
 concertEvents.push(new ConcertEvent("Helene Fischer", 3.1));
 concertEvents.push(new ConcertEvent("Bee Gees", 25.2));
 
-for (let index = 0; index < ConcertEvents.length; index++) {
-  console.log(concertEvents[index].show());
+for (const entry of concertEvents) {
+  console.log(entry.show);
 }
+
+console.log("Hallo Welt");

@@ -113,4 +113,5 @@ concertEvents.push(new ConcertEvent("Bee Gees", 25.2));
 for (const entry of concertEvents) {
     console.log(entry.show());
 }
+
 //# sourceMappingURL=script_vorlage.js.map
