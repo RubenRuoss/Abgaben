@@ -10,6 +10,7 @@
         <meta name="viewport" content="width-device-width, initial-scale=1.0">
         <meta name="author" content="Ruben Ruoss" />
         <meta name="description" content="Diese Seite wird lediglich für eine Abgabe meines Studiums geschrieben" />
+        <script src="script.js" defer></script>
     </head>
     <body>
         <div class="container">
@@ -23,7 +24,25 @@
                 </div>            
             </nav>
             <main id="main">
-                <p>Zumindest hoffe ich, dass hier noch einiges entstehen wird.</p>
+                <div class="Input">
+                    <div class="feld">
+                        <Label>Interpret</Label>
+                        <input type="text" name="interpret" id="interpretInput" placeholder="Interpret">
+                    </div>
+                    <div class="feld">
+                        <Label>Price</Label>
+                        <input type="text" name="price" id="priceInput" placeholder="Price">
+                    </div>
+                </div>
+                <button id="enterButton" type="submit">Enter Event</button>
+                <div id="output">
+                    <h4>Events Tabelle</h4>
+                    <tr>
+                        <th id="interpretSpalte">Interpret</th>
+                        <th id="priceSpalte">Price</th>
+                        <th id="deleteSpalte"><button class="deleteButton" type="submit">Delete Event</button></th>
+                    </tr>
+                </div>
             </main>
             <footer>
                 <address>

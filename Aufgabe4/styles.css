@@ -115,10 +115,6 @@ tr:nth-of-type(2n) td::selection{
     color: whitesmoke
 }
 
-tr:first-child{
-    
-}
-
 a:hover +source{
     display: block;
 }
