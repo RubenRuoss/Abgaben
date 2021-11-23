@@ -8,7 +8,7 @@ var EventTabelle;
     myButton.addEventListener("click", mybuttonHandler);
     function mybuttonHandler() {
         let interpretValue = inputIntpret.value;
-        let priceValue = inputPrice.value;
+        let priceValue = Number(inputPrice.value);
         const newDelete = document.createElement("button");
         newDelete.textContent = "Delete Event";
         newDelete.className = "deleteButton";
@@ -17,7 +17,7 @@ var EventTabelle;
         const newInterpretElement = document.createElement("td");
         newInterpretElement.textContent = interpretValue;
         const newPriceElement = document.createElement("td");
-        newPriceElement.textContent = priceValue;
+        newPriceElement.textContent = String(priceValue);
         const newReihe = document.createElement("tr");
         output.appendChild(newReihe);
         newReihe.appendChild(newInterpretElement);
