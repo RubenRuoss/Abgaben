@@ -7,33 +7,45 @@ class Event {
         this.interpret = interpret;
         this.price = price;
     }
-    gibInterpret():string{
+    gibInterpret(): string {
         return this.interpret;
     }
 
-    gibPrice(): number{
+    gibPrice(): number {
         return this.price;
     }
 
-    show(): string{
+    show(): string {
         return `Der Eintritt bei ${this.interpret} kostet ${this.price}`;
     }
 }
-
+let eventsArrayVonLocalStorage: Event [] = [];
+let stringVomLocalStorage: string = window.localStorage.getItem("myArray");
+eventsArrayVonLocalStorage = JSON.parse(stringVomLocalStorage);
+for (let index = 0; index < eventsArrayVonLocalStorage.length; index++) {
+    let element: Event = eventsArrayVonLocalStorage[index];
+    tabelleFüllen(element);
+}
 
 const inputIntpret: HTMLInputElement = <HTMLInputElement>document.getElementById("interpretInput");
 const inputPrice: HTMLInputElement = <HTMLInputElement>document.getElementById("priceInput"); 
 const output: HTMLElement = <HTMLElement>document.getElementById("output"); 
 const myButton: HTMLButtonElement = <HTMLButtonElement>document.getElementById("enterButton");
 myButton.addEventListener("click", mybuttonHandler);
+
 let eventsArray: Event [] = [];
-let eventsArrayVonLocalStorage: Event [] = [];
+let arrayString: string = JSON.stringify(eventsArray);
+window.localStorage.setItem("myArray", arrayString);
+
+
 
 function mybuttonHandler(): void {
     let interpretValue: string = inputIntpret.value;
     let priceValue: number = Number(inputPrice.value);
+
     const newDelete: HTMLButtonElement = document.createElement("button");
     newDelete.textContent = "Delete Event";
+    newDelete.style.color= "red";
     newDelete.className = "deleteButton";
     newDelete.type = "submit";
     newDelete.addEventListener("click", deleteButtonHandler);
@@ -50,6 +62,7 @@ function mybuttonHandler(): void {
     newReihe.appendChild(newDelete);
 
     eventsArray.push(new Event(interpretValue , priceValue));
+    window.localStorage.setItem("myArray", arrayString);
 
     function deleteButtonHandler(): void {
         newReihe.removeChild(newInterpretElement);
@@ -90,13 +103,4 @@ function tabelleFüllen(event: Event): void {
 
 }
 
-let arrayString: string = JSON.stringify(eventsArray);
-localStorage.setItem("myArray", arrayString);
-let stringVomLocalStorage: string = localStorage.getItem("myArray");
-eventsArrayVonLocalStorage = JSON.parse(stringVomLocalStorage);
-
-for (let index = 0; index < eventsArrayVonLocalStorage.length; index++) {
-    const element = eventsArrayVonLocalStorage[index];
-    tabelleFüllen(element);
-}
 }

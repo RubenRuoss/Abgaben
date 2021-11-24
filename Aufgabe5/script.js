@@ -18,18 +18,27 @@ var EventTabelle;
             return `Der Eintritt bei ${this.interpret} kostet ${this.price}`;
         }
     }
+    let eventsArrayVonLocalStorage = [];
+    let stringVomLocalStorage = window.localStorage.getItem("myArray");
+    eventsArrayVonLocalStorage = JSON.parse(stringVomLocalStorage);
+    for (let index = 0; index < eventsArrayVonLocalStorage.length; index++) {
+        let element = eventsArrayVonLocalStorage[index];
+        tabelleFüllen(element);
+    }
     const inputIntpret = document.getElementById("interpretInput");
     const inputPrice = document.getElementById("priceInput");
     const output = document.getElementById("output");
     const myButton = document.getElementById("enterButton");
     myButton.addEventListener("click", mybuttonHandler);
     let eventsArray = [];
-    let eventsArrayVonLocalStorage = [];
+    let arrayString = JSON.stringify(eventsArray);
+    window.localStorage.setItem("myArray", arrayString);
     function mybuttonHandler() {
         let interpretValue = inputIntpret.value;
         let priceValue = Number(inputPrice.value);
         const newDelete = document.createElement("button");
         newDelete.textContent = "Delete Event";
+        newDelete.style.color = "red";
         newDelete.className = "deleteButton";
         newDelete.type = "submit";
         newDelete.addEventListener("click", deleteButtonHandler);
@@ -43,6 +52,7 @@ var EventTabelle;
         newReihe.appendChild(newPriceElement);
         newReihe.appendChild(newDelete);
         eventsArray.push(new Event(interpretValue, priceValue));
+        window.localStorage.setItem("myArray", arrayString);
         function deleteButtonHandler() {
             newReihe.removeChild(newInterpretElement);
             newReihe.removeChild(newPriceElement);
@@ -72,14 +82,6 @@ var EventTabelle;
             newReihe.removeChild(newPriceElement);
             newReihe.removeChild(newDelete);
         }
-    }
-    let arrayString = JSON.stringify(eventsArray);
-    localStorage.setItem("myArray", arrayString);
-    let stringVomLocalStorage = localStorage.getItem("myArray");
-    eventsArrayVonLocalStorage = JSON.parse(stringVomLocalStorage);
-    for (let index = 0; index < eventsArrayVonLocalStorage.length; index++) {
-        const element = eventsArrayVonLocalStorage[index];
-        tabelleFüllen(element);
     }
 })(EventTabelle || (EventTabelle = {}));
 //# sourceMappingURL=script.js.map

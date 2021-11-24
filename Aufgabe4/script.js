@@ -11,6 +11,7 @@ var EventTabelle;
         let priceValue = Number(inputPrice.value);
         const newDelete = document.createElement("button");
         newDelete.textContent = "Delete Event";
+        newDelete.style.color = "red";
         newDelete.className = "deleteButton";
         newDelete.type = "submit";
         newDelete.addEventListener("click", deleteButtonHandler);

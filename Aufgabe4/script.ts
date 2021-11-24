@@ -11,6 +11,7 @@ function mybuttonHandler(): void {
     let priceValue: number = Number(inputPrice.value);
     const newDelete: HTMLButtonElement = document.createElement("button");
     newDelete.textContent = "Delete Event";
+    newDelete.style.color = "red";
     newDelete.className = "deleteButton";
     newDelete.type = "submit";
     newDelete.addEventListener("click", deleteButtonHandler);
