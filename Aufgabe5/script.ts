@@ -1,5 +1,11 @@
 namespace EventTabelle {
 
+const inputIntpret: HTMLInputElement = <HTMLInputElement>document.getElementById("interpretInput");
+const inputPrice: HTMLInputElement = <HTMLInputElement>document.getElementById("priceInput"); 
+const output: HTMLElement = <HTMLElement>document.getElementById("output"); 
+const myButton: HTMLButtonElement = <HTMLButtonElement>document.getElementById("enterButton");
+myButton.addEventListener("click", mybuttonHandler);
+
 class Event {
     private interpret: string;
     private price: number;
@@ -14,30 +20,65 @@ class Event {
     gibPrice(): number {
         return this.price;
     }
+    tabelleEintragen(event: Event): void {
+        let interpretValue: string = String(event.gibInterpret);
+        let priceValue: number = Number(event.gibPrice);
+        
+        const newDelete: HTMLButtonElement = document.createElement("button");
+        newDelete.textContent = "Delete Event";
+        newDelete.style.color = "red";
+        newDelete.className = "deleteButton";
+        newDelete.type = "submit";
+        newDelete.addEventListener("click", deleteButtonHandler);
+    
+        const newInterpretElement: HTMLTableCellElement = document.createElement("td"); 
+        newInterpretElement.textContent = interpretValue;
+        const newPriceElement: HTMLTableCellElement = document.createElement("td");
+        newPriceElement.textContent = String(priceValue);
+        const newReihe: HTMLTableRowElement = document.createElement("tr"); 
+    
+        output.appendChild(newReihe);
+        newReihe.appendChild(newInterpretElement);
+        newReihe.appendChild(newPriceElement); 
+        newReihe.appendChild(newDelete);
+    
+        Events.storeEvent(new Event(interpretValue , priceValue));
+    
+        function deleteButtonHandler(): void {
+            newReihe.removeChild(newInterpretElement);
+            newReihe.removeChild(newPriceElement);
+            newReihe.removeChild(newDelete);
+        }
+    
+    }
 
     show(): string {
         return `Der Eintritt bei ${this.interpret} kostet ${this.price}`;
     }
 }
-let eventsArrayVonLocalStorage: Event [] = [];
-let stringVomLocalStorage: string = window.localStorage.getItem("myArray");
-eventsArrayVonLocalStorage = JSON.parse(stringVomLocalStorage);
-for (let index = 0; index < eventsArrayVonLocalStorage.length; index++) {
-    let element: Event = eventsArrayVonLocalStorage[index];
-    tabelleFüllen(element);
+
+class Events {
+    private static events: Event [] = [];
+    static loadEvents(): void {
+        let eventsJSON: string = localStorage.getItem("events" || "[]");
+        for (let event of JSON.parse(eventsJSON)) {
+            this.events[this.events.length] = new Event(event.x , event.y);
+        }
+    }
+    static tabelleFüllen(): void { 
+        for (let event of this.events) {
+            event.tabelleEintragen(event);
+        }
+    }
+    static storeEvent(event: Event): void{
+        this.events.push(event);
+        this.events[this.events.length] = event;
+        localStorage.setItem("events", JSON.stringify(this.events));
+    }
 }
 
-const inputIntpret: HTMLInputElement = <HTMLInputElement>document.getElementById("interpretInput");
-const inputPrice: HTMLInputElement = <HTMLInputElement>document.getElementById("priceInput"); 
-const output: HTMLElement = <HTMLElement>document.getElementById("output"); 
-const myButton: HTMLButtonElement = <HTMLButtonElement>document.getElementById("enterButton");
-myButton.addEventListener("click", mybuttonHandler);
-
-let eventsArray: Event [] = [];
-let arrayString: string = JSON.stringify(eventsArray);
-window.localStorage.setItem("myArray", arrayString);
-
-
+Events.loadEvents();
+Events.tabelleFüllen();
 
 function mybuttonHandler(): void {
     let interpretValue: string = inputIntpret.value;
@@ -45,7 +86,7 @@ function mybuttonHandler(): void {
 
     const newDelete: HTMLButtonElement = document.createElement("button");
     newDelete.textContent = "Delete Event";
-    newDelete.style.color= "red";
+    newDelete.style.color = "red";
     newDelete.className = "deleteButton";
     newDelete.type = "submit";
     newDelete.addEventListener("click", deleteButtonHandler);
@@ -61,8 +102,7 @@ function mybuttonHandler(): void {
     newReihe.appendChild(newPriceElement); 
     newReihe.appendChild(newDelete);
 
-    eventsArray.push(new Event(interpretValue , priceValue));
-    window.localStorage.setItem("myArray", arrayString);
+    Events.storeEvent(new Event(interpretValue , priceValue));
 
     function deleteButtonHandler(): void {
         newReihe.removeChild(newInterpretElement);
@@ -93,7 +133,7 @@ function tabelleFüllen(event: Event): void {
     newReihe.appendChild(newPriceElement); 
     newReihe.appendChild(newDelete);
 
-    eventsArray.push(new Event(interpretValue , priceValue));
+    Events.storeEvent(new Event(interpretValue , priceValue));
 
     function deleteButtonHandler(): void {
         newReihe.removeChild(newInterpretElement);
