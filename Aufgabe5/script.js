@@ -26,7 +26,6 @@ var EventTabelle;
             newDelete.textContent = "Delete Event";
             newDelete.style.color = "red";
             newDelete.className = "deleteButton";
-            newDelete.type = "submit";
             newDelete.addEventListener("click", deleteButtonHandler);
             const newInterpretElement = document.createElement("td");
             newInterpretElement.textContent = interpretValue;
@@ -37,7 +36,7 @@ var EventTabelle;
             newReihe.appendChild(newInterpretElement);
             newReihe.appendChild(newPriceElement);
             newReihe.appendChild(newDelete);
-            Events.storeEvent(new Event(interpretValue, priceValue));
+            //Events.storeEvent(new Event(interpretValue , priceValue));
             function deleteButtonHandler() {
                 newReihe.removeChild(newInterpretElement);
                 newReihe.removeChild(newPriceElement);
@@ -51,7 +50,7 @@ var EventTabelle;
     class Events {
         static events = [];
         static loadEvents() {
-            let eventsJSON = localStorage.getItem("events" || "[]");
+            let eventsJSON = localStorage.getItem("events");
             for (let event of JSON.parse(eventsJSON)) {
                 this.events[this.events.length] = new Event(event.x, event.y);
             }

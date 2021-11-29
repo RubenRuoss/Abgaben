@@ -7,8 +7,8 @@ const myButton: HTMLButtonElement = <HTMLButtonElement>document.getElementById("
 myButton.addEventListener("click", mybuttonHandler);
 
 class Event {
-    private interpret: string;
-    private price: number;
+    public interpret: string;
+    public price: number;
     constructor(interpret: string, price: number) {
         this.interpret = interpret;
         this.price = price;
@@ -28,7 +28,6 @@ class Event {
         newDelete.textContent = "Delete Event";
         newDelete.style.color = "red";
         newDelete.className = "deleteButton";
-        newDelete.type = "submit";
         newDelete.addEventListener("click", deleteButtonHandler);
     
         const newInterpretElement: HTMLTableCellElement = document.createElement("td"); 
@@ -42,7 +41,7 @@ class Event {
         newReihe.appendChild(newPriceElement); 
         newReihe.appendChild(newDelete);
     
-        Events.storeEvent(new Event(interpretValue , priceValue));
+        //Events.storeEvent(new Event(interpretValue , priceValue));
     
         function deleteButtonHandler(): void {
             newReihe.removeChild(newInterpretElement);
@@ -58,9 +57,9 @@ class Event {
 }
 
 class Events {
-    private static events: Event [] = [];
+    public static events: Event [] = [];
     static loadEvents(): void {
-        let eventsJSON: string = localStorage.getItem("events" || "[]");
+        let eventsJSON: string = localStorage.getItem("events");
         for (let event of JSON.parse(eventsJSON)) {
             this.events[this.events.length] = new Event(event.x , event.y);
         }
