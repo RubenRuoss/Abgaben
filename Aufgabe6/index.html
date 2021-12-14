@@ -6,11 +6,10 @@
         <link rel="preconnect" href="https://fonts.googleapis.com"> 
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
         <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap" rel="stylesheet">
-        <title>Silverstone</title>
+        <title>Client</title>
         <meta name="viewport" content="width-device-width, initial-scale=1.0">
         <meta name="author" content="Ruben Ruoss" />
         <meta name="description" content="Diese Seite wird lediglich für eine Abgabe meines Studiums geschrieben. Die gesamte Seite befasst sich mit Silverstone, der Heimat der Formel 1" />
-        <script src="server.js" defer></script>
         <script src="client.js" defer></script>
     </head>
     <body>
@@ -31,9 +30,11 @@
             <hr>
         </nav>
         <main>
-           <div>
-                <input type="date" id="input">
+           <form id="myForm">
+                <input type="date" id="input" name="date" max="9999-12-31" min="-9999-01-31">
                 <button id="übergabe">Datum übergeben</button>
+           </form>
+           <div id="output">
            </div>
         </main>
         <hr>
