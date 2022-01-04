@@ -6,9 +6,7 @@ const hostname = "127.0.0.1"; // localhost
 const port = 3000;
 const mongoUrl = "mongodb://localhost:27017"; // für lokale MongoDB
 let mongoClient = new mongo.MongoClient(mongoUrl);
-await mongoClient.connect();
 async function dbFind(db, collection, requestObject, response) {
-    await mongoClient.connect();
     let result = await mongoClient
         .db(db)
         .collection(collection)
@@ -25,7 +23,7 @@ async function dbAddOrEdit(db, collection, request) {
     });
     request.on("end", async () => {
         await mongoClient.connect();
-        // console.log(jsonString); // bei Fehlern zum Testen
+        console.log(jsonString); // bei Fehlern zum Testen
         let event = JSON.parse(jsonString);
         if (event._id && event._id !== undefined) {
             event._id = new mongo.ObjectId(event._id);
@@ -45,16 +43,14 @@ const server = http.createServer(async (request, response) => {
     let url = new URL(request.url || "", `http://${request.headers.host}`);
     switch (url.pathname) {
         case "/concertEvents": {
-            await mongoClient.connect();
             switch (request.method) {
                 case "GET":
                     await dbFind("interpret", "price", {
-                        price: Number(url.searchParams.get("price")),
-                        interpret: url.searchParams.get("interpret"),
+                        interpret: url.searchParams.get("interpret")
                     }, response);
                     break;
                 case "POST":
-                    await dbAddOrEdit("interpret", "price", request);
+                    await dbAddOrEdit("db", "Events", request);
                     break;
             }
             break;

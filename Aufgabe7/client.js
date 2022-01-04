@@ -29,13 +29,18 @@ var EventTabelle;
             newReihe.removeChild(newPriceElement);
             newReihe.removeChild(newDelete);
         }
+        let konzertEvent = {
+            interpret: interpretValue,
+            price: priceValue
+        };
+        post(konzertEvent);
     }
-    async function sendJSONStringWithPOST(url, jsonString) {
-        await fetch(url, { method: "post", body: jsonString });
+    async function post(konzertEvent) {
+        console.log(konzertEvent);
+        await fetch("http://localhost:3000/concertEvents", {
+            method: "POST",
+            body: JSON.stringify(konzertEvent)
+        });
     }
-    sendJSONStringWithPOST("http://localhost:3000/conertEvents", JSON.stringify({
-        interpret: inputIntpret.value,
-        price: inputPrice.value,
-    }));
 })(EventTabelle || (EventTabelle = {}));
 //# sourceMappingURL=client.js.map

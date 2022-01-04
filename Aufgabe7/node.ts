@@ -19,7 +19,7 @@ async function main(): Promise<void> {
 
   let newEvent: Event = {
     interpret: "Bruno Mars",
-    price: 20,
+    price: 20
   };
   await eventCollection.insertOne(newEvent);
   let events: Event[] = <Event[]>(
@@ -29,4 +29,6 @@ async function main(): Promise<void> {
   await mongoClient.close();
 }
 
-main();
+server.listen(port, hostname, () => {
+  console.log(`Server running at http://${hostname}:${port}/`);
+});

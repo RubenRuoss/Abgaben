@@ -5,16 +5,14 @@ const hostname: string = "127.0.0.1"; // localhost
 const port: number = 3000;
 const mongoUrl: string = "mongodb://localhost:27017"; // für lokale MongoDB
 let mongoClient: mongo.MongoClient = new mongo.MongoClient(mongoUrl);
-await mongoClient.connect();
 
 interface Event {
     _id?: mongo.ObjectId;
     interpret: string;
     price: number;
-  }
+   }
 
 async function dbFind(db: string, collection: string, requestObject: any, response: http.ServerResponse): Promise<void> {
-      await mongoClient.connect();
       let result = await mongoClient
       .db(db)
       .collection(collection)
@@ -24,6 +22,7 @@ async function dbFind(db: string, collection: string, requestObject: any, respon
       response.setHeader("Content-Type", "application/json");
       response.write(JSON.stringify(result));
   }
+
 async function dbAddOrEdit(db: string, collection: string, request: http.IncomingMessage): Promise<void> {
   let jsonString: string = "";
   request.on("data", data => {
@@ -31,7 +30,7 @@ async function dbAddOrEdit(db: string, collection: string, request: http.Incomin
   });
   request.on("end", async () => {
     await mongoClient.connect();
-    // console.log(jsonString); // bei Fehlern zum Testen
+    console.log(jsonString); // bei Fehlern zum Testen
     let event: Event = JSON.parse(jsonString);
     if (event._id && event._id !== undefined) {
       event._id = new mongo.ObjectId(event._id);
@@ -56,27 +55,25 @@ const server: http.Server = http.createServer(
       
       switch (url.pathname) {
         case "/concertEvents": {
-          await mongoClient.connect();
           switch (request.method) {
             case "GET":
               await dbFind(
                 "interpret",
                 "price",
                 {
-                  price: Number(url.searchParams.get("price")), 
-                  interpret: url.searchParams.get("interpret"),
+                  interpret: url.searchParams.get("interpret")
                 },
                 response 
               );
               break;
             case "POST":
-              await dbAddOrEdit("interpret", "price", request);
+              await dbAddOrEdit("db", "Events", request);
               break;
               }
-              break;
-            }
-            default:
-              response.statusCode = 404;
+          break;
+          }
+          default:
+            response.statusCode = 404;
       }
       response.end();
     }

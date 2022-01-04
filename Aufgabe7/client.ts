@@ -6,6 +6,11 @@ const output: HTMLElement = <HTMLElement>document.getElementById("output");
 const myButton: HTMLButtonElement = <HTMLButtonElement>document.getElementById("enterButton");
 myButton.addEventListener("click", mybuttonHandler);
 
+interface KonzertEvent{
+  interpret: string;
+  price: number;
+}
+
 function mybuttonHandler(): void {
     let interpretValue: string = inputIntpret.value;
     let priceValue: number = Number(inputPrice.value);
@@ -32,20 +37,19 @@ function mybuttonHandler(): void {
         newReihe.removeChild(newPriceElement);
         newReihe.removeChild(newDelete);
     }
+    let konzertEvent: KonzertEvent = {
+      interpret: interpretValue, 
+      price: priceValue
+    };
+    post(konzertEvent);
 }
-async function sendJSONStringWithPOST(
-    url: RequestInfo,
-    jsonString: string
-  ): Promise<void> {
-    await fetch(url, { method: "post", body: jsonString });
-  }
-  
-    sendJSONStringWithPOST(
-    "http://localhost:3000/conertEvents",
-    JSON.stringify({
-      interpret: inputIntpret.value ,
-      price: inputPrice.value,
-      
-    })
-  );
+
+async function post(konzertEvent: KonzertEvent): Promise<void> {
+  console.log(konzertEvent);
+  await fetch("http://localhost:3000/concertEvents", {
+    method: "POST",
+    body: JSON.stringify(konzertEvent)
+  });
+}
+
 }
