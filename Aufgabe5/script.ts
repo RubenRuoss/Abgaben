@@ -4,142 +4,96 @@ const inputIntpret: HTMLInputElement = <HTMLInputElement>document.getElementById
 const inputPrice: HTMLInputElement = <HTMLInputElement>document.getElementById("priceInput"); 
 const output: HTMLElement = <HTMLElement>document.getElementById("output"); 
 const myButton: HTMLButtonElement = <HTMLButtonElement>document.getElementById("enterButton");
-myButton.addEventListener("click", mybuttonHandler);
+myButton.addEventListener("click", myButtonHandler);
+let events: Event [] = [];
 
 class Event {
-    public interpret: string;
-    public price: number;
+    interpret: string;
+    price: number;
     constructor(interpret: string, price: number) {
         this.interpret = interpret;
         this.price = price;
     }
-    gibInterpret(): string {
+    set interpretName(name: string) {
+        this.interpret = name;
+    }
+    get interpretName(): string {
         return this.interpret;
     }
-
-    gibPrice(): number {
+    set priceZahl(price: number) {
+        this.price = price;
+    }
+    get priceZahl(): number {
         return this.price;
     }
-    tabelleEintragen(event: Event): void {
-        let interpretValue: string = String(event.gibInterpret);
-        let priceValue: number = Number(event.gibPrice);
-        
-        const newDelete: HTMLButtonElement = document.createElement("button");
-        newDelete.textContent = "Delete Event";
-        newDelete.style.color = "red";
-        newDelete.className = "deleteButton";
-        newDelete.addEventListener("click", deleteButtonHandler);
-    
-        const newInterpretElement: HTMLTableCellElement = document.createElement("td"); 
-        newInterpretElement.textContent = interpretValue;
-        const newPriceElement: HTMLTableCellElement = document.createElement("td");
-        newPriceElement.textContent = String(priceValue);
-        const newReihe: HTMLTableRowElement = document.createElement("tr"); 
-    
-        output.appendChild(newReihe);
-        newReihe.appendChild(newInterpretElement);
-        newReihe.appendChild(newPriceElement); 
-        newReihe.appendChild(newDelete);
-    
-        //Events.storeEvent(new Event(interpretValue , priceValue));
-    
-        function deleteButtonHandler(): void {
-            newReihe.removeChild(newInterpretElement);
-            newReihe.removeChild(newPriceElement);
-            newReihe.removeChild(newDelete);
-        }
-    
-    }
-
-    show(): string {
-        return `Der Eintritt bei ${this.interpret} kostet ${this.price}`;
-    }
 }
+loadArray();
+showArray(events);
 
-class Events {
-    public static events: Event [] = [];
-    static loadEvents(): void {
-        let eventsJSON: string = localStorage.getItem("events");
-        for (let event of JSON.parse(eventsJSON)) {
-            this.events[this.events.length] = new Event(event.x , event.y);
-        }
-    }
-    static tabelleFüllen(): void { 
-        for (let event of this.events) {
-            event.tabelleEintragen(event);
-        }
-    }
-    static storeEvent(event: Event): void{
-        this.events.push(event);
-        this.events[this.events.length] = event;
-        localStorage.setItem("events", JSON.stringify(this.events));
-    }
-}
-
-Events.loadEvents();
-Events.tabelleFüllen();
-
-function mybuttonHandler(): void {
+function myButtonHandler(): void {
     let interpretValue: string = inputIntpret.value;
     let priceValue: number = Number(inputPrice.value);
 
-    const newDelete: HTMLButtonElement = document.createElement("button");
-    newDelete.textContent = "Delete Event";
-    newDelete.style.color = "red";
-    newDelete.className = "deleteButton";
-    newDelete.type = "submit";
-    newDelete.addEventListener("click", deleteButtonHandler);
+    let event: Event = new Event(interpretValue, priceValue);
+    events.push(event);
+    console.log(events);
 
-    const newInterpretElement: HTMLTableCellElement = document.createElement("td"); 
-    newInterpretElement.textContent = interpretValue;
-    const newPriceElement: HTMLTableCellElement = document.createElement("td");
-    newPriceElement.textContent = String(priceValue);
-    const newReihe: HTMLTableRowElement = document.createElement("tr"); 
+    let newTR: HTMLTableRowElement = document.createElement("tr");
+    let newInterpret: HTMLTableCellElement = document.createElement("td");
+    newInterpret.textContent = interpretValue;
+    let newPrice: HTMLTableCellElement = document.createElement("td");
+    newPrice.textContent = String(priceValue);
+    let deleteButton: HTMLButtonElement = document.createElement("button");
+    deleteButton.addEventListener("click", function(): void {
+        deleteEvent(newTR, event);
+    });
+    deleteButton.style.color = "red";
+    deleteButton.textContent =  "Event Löschen";
 
-    output.appendChild(newReihe);
-    newReihe.appendChild(newInterpretElement);
-    newReihe.appendChild(newPriceElement); 
-    newReihe.appendChild(newDelete);
-
-    Events.storeEvent(new Event(interpretValue , priceValue));
-
-    function deleteButtonHandler(): void {
-        newReihe.removeChild(newInterpretElement);
-        newReihe.removeChild(newPriceElement);
-        newReihe.removeChild(newDelete);
-    }
-
+    output.appendChild(newTR);
+    newTR.appendChild(newInterpret);
+    newTR.appendChild(newPrice);
+    newTR.appendChild(deleteButton);
+    storeArray();
 }
-
-function tabelleFüllen(event: Event): void {
-    let interpretValue: string = String(event.gibInterpret);
-    let priceValue: number = Number(event.gibPrice);
-    
-    const newDelete: HTMLButtonElement = document.createElement("button");
-    newDelete.textContent = "Delete Event";
-    newDelete.className = "deleteButton";
-    newDelete.type = "submit";
-    newDelete.addEventListener("click", deleteButtonHandler);
-
-    const newInterpretElement: HTMLTableCellElement = document.createElement("td"); 
-    newInterpretElement.textContent = interpretValue;
-    const newPriceElement: HTMLTableCellElement = document.createElement("td");
-    newPriceElement.textContent = String(priceValue);
-    const newReihe: HTMLTableRowElement = document.createElement("tr"); 
-
-    output.appendChild(newReihe);
-    newReihe.appendChild(newInterpretElement);
-    newReihe.appendChild(newPriceElement); 
-    newReihe.appendChild(newDelete);
-
-    Events.storeEvent(new Event(interpretValue , priceValue));
-
-    function deleteButtonHandler(): void {
-        newReihe.removeChild(newInterpretElement);
-        newReihe.removeChild(newPriceElement);
-        newReihe.removeChild(newDelete);
-    }
-
+function deleteEvent(parentElement: HTMLDivElement , event: Event): void {
+    output.removeChild(parentElement);
+    events.splice(events.indexOf(event) - 1 , 1);
+    console.log(events);
+    storeArray();
 }
+function storeArray(): void {
+    let arrayString: string = JSON.stringify(events);
+    localStorage.setItem("event", arrayString);
+}
+function loadArray(): void {
+    let stringFromLocalStorage: string = localStorage.getItem("event");
+    let arrayIGotFromStorage: Event [] = JSON.parse(stringFromLocalStorage);
+    for (let event of arrayIGotFromStorage) {
+        events[events.length] =  event;
+    }
+}
+function showArray(aktuelleEvents: Array<Event>): void {
+    for (let aktuellerEvent of aktuelleEvents) {
+    let interpretValue: string = aktuellerEvent.interpret;
+    let priceValue: number = aktuellerEvent.price;
 
+    let newTR: HTMLTableRowElement = document.createElement("tr");
+    let newInterpret: HTMLTableCellElement = document.createElement("td");
+    newInterpret.textContent = interpretValue;
+    let newPrice: HTMLTableCellElement = document.createElement("td");
+    newPrice.textContent = String(priceValue);
+    let deleteButton: HTMLButtonElement = document.createElement("button");
+    deleteButton.addEventListener("click", function(): void {
+        deleteEvent(newTR, aktuellerEvent);
+    });
+    deleteButton.style.color = "red";
+    deleteButton.textContent =  "Event Löschen";
+
+    output.appendChild(newTR);
+    newTR.appendChild(newInterpret);
+    newTR.appendChild(newPrice);
+    newTR.appendChild(deleteButton);
+}
+}
 }
