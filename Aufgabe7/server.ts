@@ -46,6 +46,22 @@ async function dbAddOrEdit(db: string, collection: string, request: http.Incomin
     }
   });
 }
+async function main(): Promise<void> {
+  await mongoClient.connect();
+  const db: mongo.Db = mongoClient.db("db");
+  const eventCollection: mongo.Collection = db.collection("Events");
+
+  let newEvent: Event = {
+    interpret: "Bruno Mars",
+    price: 20
+  };
+  await eventCollection.insertOne(newEvent);
+  let events: Event[] = <Event[]>(
+    await eventCollection.find({ interpret: "Bruno Mars"}).toArray()
+  );
+  console.log(events);
+  await mongoClient.close();
+}
 
 const server: http.Server = http.createServer(
     async (request: http.IncomingMessage, response: http.ServerResponse) => {

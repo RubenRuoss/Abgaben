@@ -37,6 +37,19 @@ async function dbAddOrEdit(db, collection, request) {
         }
     });
 }
+async function main() {
+    await mongoClient.connect();
+    const db = mongoClient.db("db");
+    const eventCollection = db.collection("Events");
+    let newEvent = {
+        interpret: "Bruno Mars",
+        price: 20
+    };
+    await eventCollection.insertOne(newEvent);
+    let events = (await eventCollection.find({ interpret: "Bruno Mars" }).toArray());
+    console.log(events);
+    await mongoClient.close();
+}
 const server = http.createServer(async (request, response) => {
     response.statusCode = 200;
     // response.setHeader("Access-Control-Allow-Origin", "*"); // bei CORS Fehler
