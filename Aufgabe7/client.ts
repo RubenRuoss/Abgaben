@@ -25,8 +25,7 @@ function mybuttonHandler(): void {
     output.appendChild(newReihe);
     newReihe.appendChild(newInterpretElement);
     newReihe.appendChild(newPriceElement); 
-    newReihe.appendChild(newDelete);
-    
+
     let konzertEvent: KonzertEvent = {
       interpret: interpretValue, 
       price: priceValue

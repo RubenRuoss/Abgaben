@@ -18,7 +18,6 @@ var EventTabelle;
         output.appendChild(newReihe);
         newReihe.appendChild(newInterpretElement);
         newReihe.appendChild(newPriceElement);
-        newReihe.appendChild(newDelete);
         let konzertEvent = {
             interpret: interpretValue,
             price: priceValue
