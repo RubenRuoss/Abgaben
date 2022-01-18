@@ -5,8 +5,9 @@ const inputPrice: HTMLInputElement = <HTMLInputElement>document.getElementById("
 const output: HTMLElement = <HTMLElement>document.getElementById("output"); 
 const myButton: HTMLButtonElement = <HTMLButtonElement>document.getElementById("enterButton");
 myButton.addEventListener("click", mybuttonHandler);
+get();
 
-interface KonzertEvent{
+interface KonzertEvent {
   interpret: string;
   price: number;
 }
@@ -14,12 +15,6 @@ interface KonzertEvent{
 function mybuttonHandler(): void {
     let interpretValue: string = inputIntpret.value;
     let priceValue: number = Number(inputPrice.value);
-    const newDelete: HTMLButtonElement = document.createElement("button");
-    newDelete.textContent = "Delete Event";
-    newDelete.style.color = "red";
-    newDelete.className = "deleteButton";
-    newDelete.type = "submit";
-    newDelete.addEventListener("click", deleteButtonHandler);
 
     const newInterpretElement: HTMLTableCellElement = document.createElement("td"); 
     newInterpretElement.textContent = interpretValue;
@@ -31,12 +26,7 @@ function mybuttonHandler(): void {
     newReihe.appendChild(newInterpretElement);
     newReihe.appendChild(newPriceElement); 
     newReihe.appendChild(newDelete);
-
-    function deleteButtonHandler(): void {
-        newReihe.removeChild(newInterpretElement);
-        newReihe.removeChild(newPriceElement);
-        newReihe.removeChild(newDelete);
-    }
+    
     let konzertEvent: KonzertEvent = {
       interpret: interpretValue, 
       price: priceValue
@@ -50,6 +40,32 @@ async function post(konzertEvent: KonzertEvent): Promise<void> {
     method: "POST",
     body: JSON.stringify(konzertEvent)
   });
+}
+
+async function get(): Promise<void> {
+  let response: Response = await fetch("http://localhost:3000/concertEvents", {
+    method: "GET"
+  });
+  let text: string = await response.text();
+  let konzerte: KonzertEvent[] = JSON.parse(text) as KonzertEvent[];
+  for (let konzert of konzerte) {
+    print(konzert);
+  }
+}
+
+function print(konzertEvent: KonzertEvent): void {
+  let newInterpret: string = konzertEvent.interpret;
+  let newPrice: number = konzertEvent.price;
+
+  const newInterpretElement: HTMLTableCellElement = document.createElement("td"); 
+  newInterpretElement.textContent = newInterpret;
+  const newPriceElement: HTMLTableCellElement = document.createElement("td");
+  newPriceElement.textContent = String(newPrice);
+  const newReihe: HTMLTableRowElement = document.createElement("tr"); 
+
+  output.appendChild(newReihe);
+  newReihe.appendChild(newInterpretElement);
+  newReihe.appendChild(newPriceElement);
 }
 
 }
