@@ -7,7 +7,7 @@ const mongoUrl: string = "mongodb://localhost:27017"; // für lokale MongoDB
 let mongoClient: mongo.MongoClient = new mongo.MongoClient(mongoUrl);
 
 interface Event {
-  mongoId: string;
+  _id: string;
   interpret: string;
   price: number;
 }
@@ -32,18 +32,9 @@ async function dbAddOrEdit(db: string, collection: string, request: http.Incomin
     await mongoClient.connect();
     //console.log(jsonString); // bei Fehlern zum Testen
     let event: Event = JSON.parse(jsonString);
-    if (event._id && event._id !== "") {
-      event._id = new mongo.ObjectId(event._id);
-      mongoClient.db(db).collection(collection).replaceOne(
-        {
-          _id: event._id
-        },
-        event
-      );
-    } else {
-      event._id = undefined;
-      mongoClient.db(db).collection(collection).insertOne(event);
-    }
+    event._id = undefined;
+    mongoClient.db(db).collection(collection).insertOne(event);
+  
   });
 }
 

@@ -25,16 +25,8 @@ async function dbAddOrEdit(db, collection, request) {
         await mongoClient.connect();
         //console.log(jsonString); // bei Fehlern zum Testen
         let event = JSON.parse(jsonString);
-        if (event._id && event._id !== "") {
-            event._id = new mongo.ObjectId(event._id);
-            mongoClient.db(db).collection(collection).replaceOne({
-                _id: event._id
-            }, event);
-        }
-        else {
-            event._id = undefined;
-            mongoClient.db(db).collection(collection).insertOne(event);
-        }
+        event._id = undefined;
+        mongoClient.db(db).collection(collection).insertOne(event);
     });
 }
 const server = http.createServer(async (request, response) => {
