@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="styles.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com"> 
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap" rel="stylesheet">
+        <title>Gefrierschrank</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width-device-width, initial-scale=1.0">
+        <meta name="author" content="Ruben Ruoss" />
+        <meta name="description" content="Hier können sie neues Gefriergut hinzufügen oder entfernen"/>
+        <script src="client.js" defer></script>
+    </head>
+    <body>
+        <header id="navi">
+            <a href="index.html" title="Gefrierschrank">Gefrierschrank</a>
+            <a href="anlegen.html" title="Gefriergut anlegen">Gefriergut anlegen</a> 
+            <a href="verwalten.html" title="Gefrierschrank verwalten">Gefrierschrank verwalten</a>              
+        </header>
+        <main>
+            <form id="eingabe">
+                <label for="gefriergutInput">Gefriergut</label>
+                <input list="gefriergutVorschläge" type="text" id="gefriergutInput" name="gefriergutInput" placeholder="Gefriergut">
+                <datalist id="gefriergutVorschläge">
+                    
+                </datalist>
+                <label for="mengeInput">Menge</label>
+                <input type="number" id="mengeInput" name="mengeInput" placeholder="Menge">
+                <label for="ablaufdatumInput">Ablaufdatum</label>
+                <input type="date" id="ablaufdatumInput" name="ablaufdatumInput" placeholder="Ablaufdatum">
+                <label for="notizInput">Weitere Notiz</label>
+                <input type="text" id="notizInput" name="notizInput" placeholder="Notiz">
+                <button id="enterButton" type="submit">Gefriergut Einlagern</button>
+            </form>
+            <div id="output">
+                <table id="outputTabelle">
+                    <tr>
+                        <th id="gefriergutOutput">Gefriergut</th>
+                        <th id="ablaufdatumOutput">Ablaufdatum</th>
+                        <th id="angelegtOutput">Angelegt am</th>
+                        <th id="notizOutput">Notiz</th>
+                    </tr>
+                </table>
+            </div>
+        </main>
+    </body>
+</html>

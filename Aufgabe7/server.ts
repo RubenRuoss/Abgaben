@@ -34,7 +34,6 @@ async function dbAddOrEdit(db: string, collection: string, request: http.Incomin
     let event: Event = JSON.parse(jsonString);
     event._id = undefined;
     mongoClient.db(db).collection(collection).insertOne(event);
-  
   });
 }
 
